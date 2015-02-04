@@ -3,13 +3,13 @@
 -----BEGIN PGP SIGNATURE-----
 Comment: GPGTools - https://gpgtools.org
 
-iQEcBAABCgAGBQJU0Z8mAAoJEHNBsVwHCHes3C0H/jty7GSUfhEXaO7r+KfeUohB
-yNitF2nnL5jj0T8V0jjOi/Td9va1KONSRdoTccSMEKejaXwXP7WR7RQJqObqxrts
-K1tbM59c4obP4GFPS/HCOWWvQSsEQVCOy5xfSmAFc5JfPu+RZ5ejki0CERXs+uIB
-Y5FjdUFujkWqmbDYBYLFGZA7FgoXynUS7ikBsTFlfUkr4QOEM0H0FWZ9Jliq/Odd
-TPGHIJKI3vi3/NlL33neb4IBuSnzQpvfp/O2loBBoufnVxDuZPD1BZBl/OyD1tzD
-Ot23NA9GubuPbmJT8pGYTDZ/BqzX7QIzodcjI+Z5UjYfOt6lWxIUSkred2Oz014=
-=Xw0c
+iQEcBAABCgAGBQJU0koxAAoJEHNBsVwHCHesVHUH/iFdNrQvvS5Xv6O+fxDXifEB
+0gjx6QkEhdccG8gx2BqCCWQbUOZsVhkN3C1+HmPR7+tnRtIJD661DeSl1ArQTR1u
+wmD44tIU5kS+zORU/UMvgE5kSkAS00oeFyPPnIiHGRHHgAQlafvh0OEpjIdfS150
+sG7FO9BoswwusOeg8fkgzBYE+HtQZpqh2dHaLm8XKzwSw7CA+2HYRUf2vdKKMTfw
+iMUapJjFxrS6Sk0qKOGPBF54QRl2v/aA/9tJekJschGClCXX4XaT2Xf1xjhjntRM
+QOyYCBpaeyXWauEAt4BRSsw9ytdidCLkMyQHwl7et+u/TtGKtYw1MlXkyXDy5tg=
+=iVNb
 -----END PGP SIGNATURE-----
 
 ```
@@ -21,12 +21,13 @@ Ot23NA9GubuPbmJT8pGYTDZ/BqzX7QIzodcjI+Z5UjYfOt6lWxIUSkred2Oz014=
 #### Expect
 
 ```
-size  exec  file            contents                                                        
-            ./                                                                              
-1389          README.md     cc879f995498c80426c4334e6bd1435d53eb9cecd5344804def90fb0fe102dd8
-4535          index.js      5d5d0eceec053d14acce6b05f09baa03b69076592c407c052b328c942d576115
-261           package.json  8aa288050e6ad9f5c67810cd839533395f202f688730ef9be3e74c0a87441243
-537           test.js       59b4d08d04248ce7b636936d7ec218857f8a1f3ce15e38e837c3b1df59aeae50
+size   exec  file            contents                                                        
+             ./                                                                              
+11331          LICENSE       5ab7c71b0c0117164d63150d7aee27498450b74b1f62befabcfb47471caf95af
+1894           README.md     74a0807e988c07b86939cf74e24f65cb4e184ee2331629dc067900465cd4c9b8
+6637           index.js      51e4d1e5ca809494f20522af42ceaf06dc57a34436e45133a4dda44ff291823d
+356            package.json  4eb856f33511135b87f8bc3d4a659bb9ba5c057e1b2b28de005c77f6f27cb15d
+394            test.js       79b6ac33d25e6870be44075197adcd0d6be21f42bc3f2d97bdbf4d1c655ce061
 ```
 
 #### Ignore

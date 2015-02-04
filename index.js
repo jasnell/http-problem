@@ -1,6 +1,23 @@
+/**
+ * Copyright(c) 2015 James M Snell <jasnell@gmail.com>
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ **/
+var Buffer = require('buffer').Buffer;
+var Readable = require('stream').Readable;
 
-function Problem() {
-}
+function Problem() {}
 Problem.prototype = {
   toJSON: function() {
     var ret = {};
@@ -104,7 +121,7 @@ var default_titles = {
 definitions = {};
 definitions['about:blank'] = define('about:blank');
 
-function define(type, title, status) {
+function create(type, title, status) {
   var props = {
     type: {
       enumerable: true,
@@ -126,8 +143,11 @@ function define(type, title, status) {
       value: status
     };
   }
-  var def = Object.create(new Problem(title||type), props);
-  definitions[type] = def;
+  return Object.create(new Problem(title||type), props);
+}
+
+function define(type, title, status) {
+  var def = definitions[type] = create(type,title,status);
   return def;
 };
 
@@ -153,7 +173,7 @@ exports.raise = function(type, options) {
   }
   type = type || 'about:blank';
   options = options || {};
-  var def = definitions[type] || define(type, options.title, options.status);
+  var def = definitions[type] || create(type, options.title, options.status);
   var props = {};
   if (options.instance) {
     props.instance = {
@@ -173,10 +193,15 @@ exports.raise = function(type, options) {
       value: options.status
     }
   }
-  if (type === 'about:blank' && options.status && default_titles[options.status]) {
+  if (!options.title && type === 'about:blank' && options.status && default_titles[options.status]) {
     props.title = {
       enumerable:true,
       value: default_titles[options.status]
+    };
+  } else if (options.title) {
+    props.title = {
+      enumerable: true,
+      value: options.title
     };
   }
   return Object.create(def,props);
@@ -186,11 +211,58 @@ exports.send = function(res, type, options) {
   exports.raise(type, options).send(res);
 };
 
-exports.parse = function(input) {
-  // TODO: handle readables here
-  var _input = input;
-  if (typeof input === 'string')
-    _input = JSON.parse(input);
-  return exports.raise(_input.type,input);
+exports.throw = function(type, options) {
+  exports.raise(type, options).throw();
 };
 
+function attempt(fn,arguments,callback) {
+  if (typeof callback !== 'function')
+    throw new Error('A callback function MUST be provided');
+  try {
+    var ret = fn.apply(fn,arguments);
+    callback(null,ret);
+  } catch (err) {
+    callback(err);
+  }
+}
+
+exports.parse = function(input, callback) {
+  if (typeof callback !== 'function')
+    throw new Error('A callback function MUST be provided');
+
+  var complete = function(input) {
+    var _type = typeof input;
+    if (_type === 'string' || input instanceof Buffer) {
+      attempt(JSON.parse,[input],function(err,res) {
+        if (err) {
+          callback(err);
+          return;
+        }
+        callback(null,exports.raise(res.type,res));
+      });
+    } else if (_type === 'object') {
+      callback(null,exports.raise(input.type,input));
+    } else return parse(input.toString(), callback); // last ditch attempt
+  }
+
+  if (!input) return null;
+  if (input instanceof Readable) {
+    var data = '';
+    input.on('end', function() {
+      complete(data);
+    });
+    input.on('data', function(chunk) {
+      if (chunk) data += chunk;
+    });
+  } else {
+    complete(input);
+  }
+};
+
+exports.middleware = function(err, req, res, next) {
+  if (err.problem) {
+    err.problem.send(res);
+  } else {
+    problem.send(res, {status:500,detail:err.message});
+  }
+};
