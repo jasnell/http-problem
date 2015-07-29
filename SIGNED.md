@@ -3,13 +3,13 @@
 -----BEGIN PGP SIGNATURE-----
 Comment: GPGTools - https://gpgtools.org
 
-iQEcBAABCgAGBQJU0koxAAoJEHNBsVwHCHesVHUH/iFdNrQvvS5Xv6O+fxDXifEB
-0gjx6QkEhdccG8gx2BqCCWQbUOZsVhkN3C1+HmPR7+tnRtIJD661DeSl1ArQTR1u
-wmD44tIU5kS+zORU/UMvgE5kSkAS00oeFyPPnIiHGRHHgAQlafvh0OEpjIdfS150
-sG7FO9BoswwusOeg8fkgzBYE+HtQZpqh2dHaLm8XKzwSw7CA+2HYRUf2vdKKMTfw
-iMUapJjFxrS6Sk0qKOGPBF54QRl2v/aA/9tJekJschGClCXX4XaT2Xf1xjhjntRM
-QOyYCBpaeyXWauEAt4BRSsw9ytdidCLkMyQHwl7et+u/TtGKtYw1MlXkyXDy5tg=
-=iVNb
+iQEcBAABCgAGBQJVuBr4AAoJEHNBsVwHCHesN0IIAILn8FajSCiWqzMgJmGNj9FX
+6ksNs1oI1pe99gHBjBwzdn7f2i+1UiXI+5+Sj13SCLWVY1L6gUcQ8aUyrL33HjWC
+lx5EJqwLUy6IcsqX9sd2MCJd0JMv3QHFzX1oWWDTd6MDgPZSHyx+YrPeccabdXzL
+LW5tmj4S+fHlTlra71s//PZOKM3D04cxyClx7TJvCygDV4gGaakROMqjIL7M1iVO
+lR8nSHVhyp9IIXWnDPNtI6NKvQIEC4nSAA1cUk97Qm0WtC5ASD4Wz4Boc2DR6Kkw
+8ih73zOOsXM9wVVW31QKQWBXqb+OCx0qF6yKQKODY2hv0mVb3osk8ZSNud1MnCs=
+=X4dM
 -----END PGP SIGNATURE-----
 
 ```
@@ -23,11 +23,15 @@ QOyYCBpaeyXWauEAt4BRSsw9ytdidCLkMyQHwl7et+u/TtGKtYw1MlXkyXDy5tg=
 ```
 size   exec  file            contents                                                        
              ./                                                                              
+13             .gitignore    16d30e4462189fb14dd611bdb708c510630c576a1f35b9383e89a4352da36c97
+75             .jshintrc     516823ae78f6da2c087c9052a589370f1b25413f3b19507b0a1156b59f2e1d70
+7331           index.js      b990f7ab4e83f886896c1c47827d79f7bfbb9be1bde3c1dda1a286ea68de9f65
+               lib/                                                                          
 11331          LICENSE       5ab7c71b0c0117164d63150d7aee27498450b74b1f62befabcfb47471caf95af
-1894           README.md     74a0807e988c07b86939cf74e24f65cb4e184ee2331629dc067900465cd4c9b8
-6637           index.js      51e4d1e5ca809494f20522af42ceaf06dc57a34436e45133a4dda44ff291823d
-356            package.json  4eb856f33511135b87f8bc3d4a659bb9ba5c057e1b2b28de005c77f6f27cb15d
-394            test.js       79b6ac33d25e6870be44075197adcd0d6be21f42bc3f2d97bdbf4d1c655ce061
+452            package.json  7590b46430c8b1f6d731da5e3322b6798d4f028023c8ad972c57f63d2f23e846
+7884           README.md     ab7ebfa44d751f615555837a7f2ef00c3d2d2dbe3b0b5227727d6781aee0928b
+               test/                                                                         
+3522             test.js     beca92f0c71150ebab3a00c780e005f414bf52b30381cd4686d633f1483232e3
 ```
 
 #### Ignore

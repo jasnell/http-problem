@@ -1,15 +1,21 @@
 {
   "name": "http-problem",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "HTTP Problem",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/test"
   },
   "author": "James M Snell <jasnell@gmail.com>",
   "license": "Apache v2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/jasnell/http-problem"
-  }
+  },
+  "devDependencies": {
+    "express": "^4.13.1",
+    "mocha": "^2.2.5",
+    "request": "^2.60.0"
+  },
+  "dependencies": {}
 }
