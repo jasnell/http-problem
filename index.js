@@ -15,18 +15,24 @@
  *
  **/
 'use strict';
-var url = require('url');
-var util = require('util');
-var http = require('http-status');
-var prefix = 'http://www.iana.org/assignments/http-status-codes#';
+const url = require('url');
+const util = require('util');
+const http = require('http-status');
+const prefix = 'http://www.iana.org/assignments/http-status-codes#';
+
+const ERR_STATUS = 'status must be a valid HTTP Error Status Code';
+const ERR_TYPE = 'type must be a string or Problem.Type';
+const ERR_TYPESPEC = 'type must be specified';
+const ERR_TYPEURL = 'type must be an absolute URI';
+const ERR_PROBTYPE = 'Not a valid problem type';
 
 function absolute(uri) {
-  var res = url.parse(uri);
+  let res = url.parse(uri);
   return res.protocol !== undefined && res.protocol !== null;
 }
 
 function constant(target,name,value,hidden) {
-  var def = {
+  let def = {
     configurable: false,
     enumerable: value !== undefined && !hidden,
     value: value
@@ -48,7 +54,7 @@ var statusDef = {
       if (isNaN(val) ||
           val < 200 ||
           val > 999) {
-        throw new TypeError('Status must be a valid HTTP Error Status Code');
+        throw new TypeError(ERR_STATUS);
       }
       this[_status] = val;
     }
@@ -61,7 +67,7 @@ function ProblemType(type, title, options) {
   if (!(this instanceof ProblemType))
     return new ProblemType(type,title);
   if (!absolute(type)) {
-    throw new TypeError('type must be an absolute URI');
+    throw new TypeError(ERR_TYPEURL);
   }
   constant(this,'type',type);
   if (title) {
@@ -73,7 +79,7 @@ function ProblemType(type, title, options) {
 }
 ProblemType.prototype = {
   toString: function() {
-    var ret = this.type;
+    let ret = this.type;
     if (this.title) {
       ret += ' [' + this.title + ']';
     }
@@ -83,7 +89,7 @@ ProblemType.prototype = {
     return this.type;
   },
   raise : function(options) {
-    var ins = this.instance;
+    let ins = this.instance;
     return new ins(this, options);
   },
   throw : function(options) {
@@ -92,7 +98,7 @@ ProblemType.prototype = {
 };
 Object.defineProperty(ProblemType.prototype, 'status', statusDef);
 
-var registeredTypes = {};
+const registeredTypes = {};
 function registerProblemType(type, title) {
   if (type instanceof ProblemType) {
     if (registeredTypes[type.type]) return false;
@@ -102,7 +108,7 @@ function registerProblemType(type, title) {
     constant(registeredTypes,type,new ProblemType(type,title));
     return true;
   } else {
-    throw new TypeError('Not a valid problem type');
+    throw new TypeError(ERR_PROBTYPE);
   }
 }
 function lookupProblemType(type) {
@@ -118,19 +124,19 @@ function toProblemType(type) {
     return lookupProblemType(type) || new ProblemType(type);
   }
   else {
-    throw new TypeError('type must be a string or Problem.Type');
+    throw new TypeError(ERR_TYPE);
   }
 }
 
-var _status = Symbol('status');
-var _detail = Symbol('detail');
-var _instance = Symbol('instance');
+const _status = Symbol('status');
+const _detail = Symbol('detail');
+const _instance = Symbol('instance');
 
 function Problem(type,options) {
   if (!(this instanceof Problem))
     return new Problem(type,options);
   options = options || {};
-  var ptype = toProblemType(type) || Problem.BLANK;
+  let ptype = toProblemType(type) || Problem.BLANK;
   Error.captureStackTrace(this, this.constructor);
   constant(this,'name', 'HTTP-Problem',true);
   constant(this,'message',ptype.toString(),true);
@@ -141,10 +147,10 @@ function Problem(type,options) {
     if (isNaN(options.status) ||
         options.status < 200 ||
         options.status > 999) {
-      throw new TypeError('Status must be a valid HTTP Error Status Code');
+      throw new TypeError(ERR_STATUS);
     }
   }
-  for (var key in options) {
+  for (let key in options) {
     if (key === 'status')
       this.status = options.status;
     else if (key === 'detail')
@@ -161,14 +167,14 @@ function Problem(type,options) {
 }
 util.inherits(Problem,Error);
 Problem.prototype.toJSON = function() {
-  var obj = {};
+  let obj = {};
   for (var key in this) {
     obj[key] = this[key];
   }
   return obj;
 };
 Problem.prototype.send = function(res) {
-  var status = this.status || 400;
+  let status = this.status || 400;
   res.setHeader('Content-Type', 'application/problem+json');
   res.status(status).json(this);
 };
@@ -236,11 +242,11 @@ function wrap(obj) {
   if (typeof obj === 'string') {
     obj = JSON.parse(obj);
   }
-  var type = obj.type;
+  let type = obj.type;
   if (type === null) {
-    throw new TypeError('type must be specified');
+    throw new TypeError(ERR_TYPESPEC);
   }
-  var ptype = lookupProblemType(type) ||
+  let ptype = lookupProblemType(type) ||
     new ProblemType(type,obj.title);
   return new Problem(ptype,obj);
 }
@@ -255,9 +261,9 @@ constant(Problem,'wrap', wrap);
 
 Problem.registerProblemType(Problem.Blank);
 
-for (var key in http) {
+for (let key in http) {
   if (isNaN(key)) {
-    var code = http[key];
+    let code = http[key];
     if (code >= 200) {
       var type =
         new ProblemType(

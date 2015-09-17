@@ -4,6 +4,9 @@ Provides a simple implementation of the HTTP Problem Spec (JSON format only).
 
 See: https://tools.ietf.org/html/draft-ietf-appsawg-http-problem
 
+Note: Use v0.1.0 for Node v0.12.x. With v0.2.0, the code starts to make use of
+newer ES6 features.
+
 ```bash
 npm install http-problem
 ```
