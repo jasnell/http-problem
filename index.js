@@ -140,7 +140,11 @@ function Problem(type,options) {
     return new Problem(type,options);
   options = options || {};
   let ptype = toProblemType(type) || Problem.BLANK;
-  Error.captureStackTrace(this, this.constructor);
+  if (Error.captureStackTrace) {
+    Error.captureStackTrace(this, this.constructor);
+  } else {
+    this.stack = new Error().stack
+  }
   constant(this,'name', 'HTTP-Problem',true);
   constant(this,'message',ptype.toString(),true);
   constant(this,'type',ptype.type);
