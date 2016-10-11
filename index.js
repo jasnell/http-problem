@@ -94,6 +94,9 @@ ProblemType.prototype = {
   },
   throw : function(options) {
     throw this.raise(options);
+  },
+  reject : function(options) {
+    return Promise.reject(this.raise(options));
   }
 };
 Object.defineProperty(ProblemType.prototype, 'status', statusDef);

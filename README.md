@@ -230,6 +230,12 @@ Create a new instance of this problem type and return it. The
 `options` argument is the same as the `options` for the
 `Problem` constructor.
 
+### Method: `<void> Problem.Type.prototype.reject([options])`
+
+Create a new instance of this problem type and create a rejected
+Promise with the Error. The `options` argument is the same as the
+`options` for the `Problem` constructor.
+
 ### Constants:
 
  *  `<Problem.Type> Problem.BLANK` - The `about:blank` Problem Type
