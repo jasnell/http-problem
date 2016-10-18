@@ -1,6 +1,6 @@
 {
   "name": "http-problem",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "description": "HTTP Problem",
   "main": "index.js",
   "scripts": {
@@ -17,5 +17,7 @@
     "mocha": "^2.3.2",
     "request": "^2.62.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "http-status": "^0.2.3"
+  }
 }

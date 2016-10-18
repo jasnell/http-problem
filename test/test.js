@@ -87,13 +87,39 @@ describe('Problem', function() {
       'accounts': ['http://example.net/account/12345',
                    'http://example.net/account/67890']
     };
-    let problem = Problem.wrap(obj);
-    assert.throws(function() {
-      problem.throw();
-    });
+    var thrown = false;
+    try {
+      Problem.GONE.throw();
+    } catch(error) {
+      thrown = true;
+      assert.equal(error.status, 410);
+    }
+    assert(thrown);
     done();
   });
 
+  it('should reject', function(done) {
+    let obj = {
+      'type': 'http://example.com/probs/out-of-credit',
+      'title': 'You do not have enough credit.',
+      'detail': 'Your current balance is 30, but that costs 50.',
+      'instance': 'http://example.net/account/12345/msgs/abc',
+      'balance': 30,
+      'accounts': ['http://example.net/account/12345',
+                   'http://example.net/account/67890']
+    };
+    Problem.GONE.reject().then(
+      function onSuccess() {
+        assert.fail();
+        done();
+      },
+      function onError(error) {
+        assert(error);
+        assert.equal(error.status, 410);
+        done();
+      }
+    );
+  });
 });
 
 describe('Problem.middleware', function() {
